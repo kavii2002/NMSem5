@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="B.png">
+  <title>BloomBlog — Create Your own Blog</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#7c3aed;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --maxw:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(124,58,237,0.12), transparent 10%),
+                  linear-gradient(180deg,#071029 0%, #071934 60%);
+      color:#e6eef6;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px 20px;
+      display:flex;align-items:flex-start;justify-content:center;
+    }
+    .container{
+      width:100%;max-width:var(--maxw);
+    }
+    header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2dd4bf);
+      display:grid;place-items:center;font-weight:700;font-size:20px;font-family:'Playfair Display',serif;color:white;box-shadow:0 6px 18px rgba(124,58,237,0.18);
+    }
+    .site-title{line-height:1}
+    .site-title h1{margin:0;font-size:18px}
+    .site-title p{margin:0;font-size:12px;color:var(--muted)}
+
+    .nav-actions{display:flex;gap:10px;align-items:center}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px;color:inherit;cursor:pointer;font-weight:600}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);box-shadow:0 8px 24px rgba(124,58,237,0.18);color:#021026}
+    .search{display:flex;align-items:center;gap:10px;background:var(--glass);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .search input{background:transparent;border:0;outline:none;color:inherit}
+
+    main{display:grid;grid-template-columns:1fr 340px;gap:28px}
+    @media (max-width:920px){main{grid-template-columns:1fr} .nav-actions{gap:8px} .site-title h1{font-size:16px}}
+
+    /* hero */
+    .hero{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:var(--radius);padding:28px;display:flex;gap:20px;align-items:center}
+    .hero .info{flex:1}
+    .hero h2{margin:0;font-family:'Playfair Display',serif;font-size:28px}
+    .hero p{color:var(--muted);margin:8px 0 0}
+    .hero .cta{margin-top:14px}
+
+    /* posts */
+    .posts{margin-top:18px;display:grid;gap:18px}
+    .post{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:14px;align-items:flex-start}
+    .thumbnail{width:110px;height:80px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0}
+    .meta{flex:1}
+    .meta h3{margin:0;font-size:18px}
+    .meta p{margin:8px 0 0;color:var(--muted);font-size:14px}
+    .meta .tags{margin-top:10px}
+    .tag{display:inline-block;background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-size:12px;margin-right:8px;color:var(--muted)}
+
+    /* sidebar */
+    .sidebar{position:relative}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .profile{display:flex;gap:12px;align-items:center}
+    .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#06b6d4,#7c3aed);display:grid;place-items:center;font-weight:700}
+    .muted{color:var(--muted)}
+
+    /* compose */
+    .compose{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+    .input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:inherit}
+    textarea{min-height:120px;resize:vertical}
+
+    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* modal */
+    .overlay{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+    .modal{width:100%;max-width:420px;background:linear-gradient(180deg,#071122, #081827);border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(2,6,23,0.6)}
+    .modal h3{margin:0 0 10px}
+    .modal .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+
+    /* small touches */
+    .small{font-size:13px;color:var(--muted)}
+    .ghost{background:transparent;border:0;color:var(--muted);cursor:pointer}
+
+    /* nice transition */
+    .fade-in{animation:fade 420ms ease both}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">B</div>
+        <div class="site-title">
+          <h1>BloomBlog</h1>
+          <p>Write . Share . Inspire</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="search">
+          <i class="fa fa-magnifying-glass"></i>
+          <input id="searchInput" placeholder="Search posts, tags or authors..." />
+        </div>
+        <button class="btn secondary" id="openLogin">Login</button>
+        <button class="btn primary" id="openSignup">Sign up</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div class="hero fade-in">
+          <div class="info">
+            <h2>Beautiful writing deserves a beautiful home.</h2>
+            <p class="small">BloomBlog is a clean, modern platform to publish your thoughts. Create an account and start publishing in seconds.</p>
+            <div class="cta">
+              <button class="btn primary" id="startWrite">Start Writing</button>
+              <button class="btn ghost" id="howItWorks">How it works</button>
+            </div>
+          </div>
+          <div style="width:260px;">
+            <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=800&q=60" alt="hero" style="width:100%;border-radius:12px;box-shadow:0 12px 30px rgba(2,6,23,0.6)"/>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px">
+          <h3 style="margin:0">Latest Posts</h3>
+          <div class="small muted">Found <span id="postCount">0</span> posts</div>
+        </div>
+
+        <div class="posts" id="postsList">
+          <!-- posts injected here -->
+        </div>
+
+      </section>
+
+      <aside class="sidebar">
+        <div class="card">
+          <div class="profile">
+            <div class="avatar" id="avatarLetter">G</div>
+            <div>
+              <div id="profileName">Guest</div>
+              <div class="small muted" id="profileEmail">Not signed in</div>
+            </div>
+          </div>
+
+          <div class="compose" id="composeCard" style="display:none;margin-top:12px">
+            <input id="titleInput" class="input" placeholder="Post title" />
+            <textarea id="bodyInput" placeholder="Write your post... (Markdown supported)"></textarea>
+            <input id="tagsInput" class="input" placeholder="tags (comma separated)" />
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+              <button class="btn secondary" id="clearCompose">Clear</button>
+              <button class="btn primary" id="publishBtn">Publish</button>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="small muted">
+            <strong>Tips:</strong>
+            <ul style="margin:8px 0 0;padding-left:18px">
+              <li>Sign up to publish.</li>
+              <li>Use tags to organize posts.</li>
+              <li>Everything here is stored in your browser (local demo).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="card small muted">
+          <strong>Popular Tags</strong>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px" id="tagCloud"></div>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer style="border-top:1px solid rgba(255,255,255,0.06);margin-top:40px;padding:20px 0;text-align:center;color:var(--muted);font-size:14px">
+      <div>© 2025 <strong>BloomBlog</strong>. All rights reserved.</div>
+      <div style="margin-top:8px;display:flex;justify-content:center;gap:18px;font-size:16px">
+        <a href="#" style="color:var(--muted);text-decoration:none"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:var(--muted);text-decoration:none"><i class="fab fa-github"></i></a>
+        <a href="#" style="color:var(--muted);text-decoration:none"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- modal overlay -->
+  <div class="overlay" id="overlay">
+    <div class="modal fade-in" id="modalContent">
+      <!-- dynamic modal content -->
+    </div>
+  </div>
+
+  <script>
+    // Small helper
+    const qs = s => document.querySelector(s);
+    const qsa = s => document.querySelectorAll(s);
+
+    // initial sample posts
+    const samplePosts = [
+      {
+        id: 'p1',
+        title: 'Welcome to BloomBlog',
+        body: 'This is a demo post to show how posts will look. You can create your own after signing up!',
+        author: 'Bloom Team',
+        email: 'team@bloom.dev',
+        tags: ['intro','welcome'],
+        thumb: 'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=600&q=60',
+        created: Date.now()-1000*60*60*24
+      },
+      {
+        id: 'p2',
+        title: 'Writing Tips: Keep it Simple',
+        body: 'Short paragraphs, clear headings, and a pinch of personality go a long way. Happy writing!',
+        author: 'Ava Writer',
+        email: 'ava@writers.example',
+        tags: ['writing','tips'],
+        thumb: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=60',
+        created: Date.now()-1000*60*60*48
+      }
+    ];
+
+    // localStorage keys
+    const USERS_KEY = 'bloom_users_v1';
+    const POSTS_KEY = 'bloom_posts_v1';
+    const SESSION_KEY = 'bloom_session_v1';
+
+    // load or seed posts
+    function loadPosts(){
+      const raw = localStorage.getItem(POSTS_KEY);
+      if(!raw){
+        localStorage.setItem(POSTS_KEY, JSON.stringify(samplePosts));
+        return samplePosts.slice();
+      }
+      try{ return JSON.parse(raw) || [] }catch(e){ return [] }
+    }
+
+    function savePosts(posts){ localStorage.setItem(POSTS_KEY, JSON.stringify(posts)); }
+
+    // users: {email, name, passHash}
+    function loadUsers(){
+      try{ return JSON.parse(localStorage.getItem(USERS_KEY)) || [] }catch(e){return[]}
+    }
+    function saveUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)) }
+
+    // session is simply the email
+    function getSession(){ return localStorage.getItem(SESSION_KEY) }
+    function setSession(email){ if(email) localStorage.setItem(SESSION_KEY,email); else localStorage.removeItem(SESSION_KEY) }
+
+    // utilities
+    function uid(prefix='id'){return prefix+Math.random().toString(36).slice(2,9)}
+    function renderPosts(posts){
+      const container = qs('#postsList'); container.innerHTML='';
+      posts.forEach(p=>{
+        const el = document.createElement('div'); el.className='post';
+        el.innerHTML = `
+          <div class="thumbnail" style="background-image:url(${p.thumb||placeholderThumb()})"></div>
+          <div class="meta">
+            <h3>${escapeHtml(p.title)}</h3>
+            <div class="small muted">by ${escapeHtml(p.author)} • ${new Date(p.created).toLocaleString()}</div>
+            <p>${escapeHtml(truncate(p.body,140))}</p>
+            <div class="tags">${(p.tags||[]).map(t=><span class="tag">${escapeHtml(t)}</span>).join('')}</div>
+          </div>
+        `;
+        container.appendChild(el);
+      })
+      qs('#postCount').textContent = posts.length;
+    }
+    function truncate(s,n){ return s.length>n? s.slice(0,n-1)+'…':s }
+    function placeholderThumb(){ return 'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=60' }
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;" }[c])) }
+
+    // tags
+    function updateTagCloud(posts){
+      const pool = {};
+      posts.forEach(p=> (p.tags||[]).forEach(t=>{ const k=t.trim().toLowerCase(); if(!k) return; pool[k]=(pool[k]||0)+1 }))
+      const cloud = qs('#tagCloud'); cloud.innerHTML='';
+      Object.keys(pool).sort((a,b)=>pool[b]-pool[a]).slice(0,12).forEach(t=>{
+        const el = document.createElement('div'); el.className='tag'; el.textContent = t; el.style.cursor='pointer';
+        el.onclick = ()=> filterByTag(t);
+        cloud.appendChild(el);
+      })
+    }
+
+    function filterByTag(tag){
+      const posts = loadPosts(); renderPosts(posts.filter(p=> (p.tags||[]).map(x=>x.toLowerCase()).includes(tag)));
+    }
+
+    // auth UI
+    function openModal(html){ qs('#modalContent').innerHTML = html; qs('#overlay').style.display='flex'; }
+    function closeModal(){ qs('#overlay').style.display='none'; qs('#modalContent').innerHTML=''; }
+    qs('#overlay').addEventListener('click', (e)=>{ if(e.target.id==='overlay') closeModal() });
+
+    // signup form
+    function showSignup(){
+      openModal(`
+        <h3>Sign up</h3>
+        <div class="small muted">Create your free account — demo only (client-side)</div>
+        <div style="margin-top:12px">
+          <input id="su_name" class="input" placeholder="Full name" />
+          <input id="su_email" class="input" placeholder="Email" style="margin-top:8px" />
+          <input id="su_pass" type="password" class="input" placeholder="Password" style="margin-top:8px" />
+        </div>
+        <div class="actions">
+          <button class="btn secondary" id="su_cancel">Cancel</button>
+          <button class="btn primary" id="su_submit">Create account</button>
+        </div>
+      `);
+      qs('#su_cancel').onclick = closeModal;
+      qs('#su_submit').onclick = ()=>{
+        const name = qs('#su_name').value.trim();
+        const email = qs('#su_email').value.trim().toLowerCase();
+        const pass = qs('#su_pass').value;
+        if(!name||!email||!pass){ alert('Please fill all fields'); return }
+        const users = loadUsers();
+        if(users.find(u=>u.email===email)){ alert('User already exists with this email'); return }
+        users.push({email, name, passHash: btoa(pass)});
+        saveUsers(users); setSession(email); closeModal(); refreshUI();
+        alert('Account created and logged in (demo)')
+      }
+    }
+
+    // login
+    function showLogin(){
+      openModal(`
+        <h3>Login</h3>
+        <div class="small muted">Sign in to publish and manage your posts (demo, kept in browser)</div>
+        <div style="margin-top:12px">
+          <input id="li_email" class="input" placeholder="Email" />
+          <input id="li_pass" type="password" class="input" placeholder="Password" style="margin-top:8px" />
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+          <button class="btn secondary" id="li_cancel">Cancel</button>
+          <div>
+            <button class="btn ghost" id="li_forgot">Forgot?</button>
+            <button class="btn primary" id="li_submit">Login</button>
+          </div>
+        </div>
+      `)
+      qs('#li_cancel').onclick = closeModal;
+      qs('#li_submit').onclick = ()=>{
+        const email = qs('#li_email').value.trim().toLowerCase();
+        const pass = qs('#li_pass').value;
+        const users = loadUsers();
+        const user = users.find(u=>u.email===email && u.passHash===btoa(pass));
+        if(!user){ alert('Invalid credentials'); return }
+        setSession(user.email); closeModal(); refreshUI();
+        alert('Logged in — demo session stored in this browser')
+      }
+      qs('#li_forgot').onclick = ()=>{ alert('This demo does not have password reset. Create a new account or re-enter your password.') }
+    }
+
+    // logout
+    function logout(){ if(confirm('Sign out?')){ setSession(null); refreshUI() } }
+
+    // publish
+    function publish(){
+      const title = qs('#titleInput').value.trim();
+      const body = qs('#bodyInput').value.trim();
+      const tags = qs('#tagsInput').value.split(',').map(t=>t.trim()).filter(Boolean);
+      if(!title||!body){ alert('Please add a title and body'); return }
+      const posts = loadPosts();
+      const email = getSession();
+      const users = loadUsers();
+      const me = users.find(u=>u.email===email);
+      const post = { id: uid('p'), title, body, author: me?me.name:'Anonymous', email: me?me.email:'', tags, thumb:placeholderThumb(), created: Date.now() }
+      posts.unshift(post); savePosts(posts); renderPosts(posts); updateTagCloud(posts);
+      qs('#titleInput').value=''; qs('#bodyInput').value=''; qs('#tagsInput').value='';
+      alert('Post published (stored in browser)')
+    }
+
+    // UI based on session
+    function refreshUI(){
+      const email = getSession();
+      const users = loadUsers();
+      const posts = loadPosts();
+      const me = users.find(u=>u.email===email);
+      if(me){
+        qs('#profileName').textContent = me.name;
+        qs('#profileEmail').textContent = me.email;
+        qs('#avatarLetter').textContent = (me.name||'U').slice(0,1).toUpperCase();
+        qs('#composeCard').style.display='flex';
+        // change login/signup to logout
+        qs('#openLogin').textContent = 'Logout'; qs('#openLogin').onclick = logout; 
+        qs('#openSignup').textContent = 'New Post'; qs('#openSignup').onclick = ()=>qs('#titleInput').focus();
+      } else {
+        qs('#profileName').textContent = 'Guest';
+        qs('#profileEmail').textContent = 'Not signed in';
+        qs('#avatarLetter').textContent = 'G';
+        qs('#composeCard').style.display='none';
+        qs('#openLogin').textContent = 'Login'; qs('#openLogin').onclick = showLogin;
+        qs('#openSignup').textContent = 'Sign up'; qs('#openSignup').onclick = showSignup;
+      }
+      renderPosts(posts);
+      updateTagCloud(posts);
+    }
+
+    // events
+    qs('#openSignup').addEventListener('click', showSignup);
+    qs('#openLogin').addEventListener('click', showLogin);
+    qs('#startWrite').addEventListener('click', ()=>{ const email=getSession(); if(!email){ showSignup(); return } qs('#titleInput').focus(); });
+    qs('#publishBtn').addEventListener('click', publish);
+    qs('#clearCompose').addEventListener('click', ()=>{ qs('#titleInput').value=''; qs('#bodyInput').value=''; qs('#tagsInput').value=''; });
+
+    // how it works button
+    qs('#howItWorks').addEventListener('click', () => {
+      openModal(`
+        <h3>How BloomBlog Works</h3>
+        <p class="small muted">
+          BloomBlog is a blogging platform — everything will be beatiful when you write with love.
+        </p>
+        <ol style="margin-top:12px;padding-left:18px">
+          <li>Create an account.</li>
+          <li>Login to start writing your posts.</li>
+          <li>Publish posts with tags for easy discovery.</li>
+          <li>Search and filter posts instantly.</li>
+        </ol>
+        <div class="actions">
+          <button class="btn primary" onclick="closeModal()">Close</button>
+        </div>
+      `);
+    });
+
+
+    // search
+    qs('#searchInput').addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase().trim();
+      const posts = loadPosts();
+      if(!q) return renderPosts(posts);
+      const filtered = posts.filter(p=> (p.title+p.body+(p.tags||[]).join(' ')+p.author).toLowerCase().includes(q));
+      renderPosts(filtered);
+    })
+
+    // simple utility init
+    (function init(){
+      // seed users if none (demo author)
+      const users = loadUsers();
+      if(!users.find(u=>u.email==='team@bloom.dev')){
+        users.push({email:'team@bloom.dev', name:'Bloom Team', passHash:btoa('demo123')}); saveUsers(users);
+      }
+      // seed posts
+      const posts = loadPosts(); if(posts.length===0){ savePosts(samplePosts) }
+      refreshUI();
+    })();
+
+  </script>
+</body>
+</html>
