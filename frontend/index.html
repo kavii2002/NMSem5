@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="B.png">
+  <title>BloomBlog — Write . Share . Inspire</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <style>
+    /* Professional and Modern CSS with BRIGHT Colors */
+    :root{
+      --bg: #f8f9fa; /* Very Light background (White/Off-White) */
+      --card-bg: #f8f9fa; /* Pure White card background */
+      --accent-primary: #007bff; /* Primary Blue (Interactive elements) */
+      --accent-secondary: #ff477d; /* Secondary Pink/Rose (Vibrant contrast) */
+      --text: #212529; /* Dark text for readability */
+      --muted: #6c757d; /* Soft gray muted text */
+      --border: #fff; /* Light gray border color */
+      --vibrant-card: #e9ecef; /* Slightly darker background for forms/sections */
+      --radius: 8px;
+      --maxw: 10000px;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;width: 100%;}
+    body{
+      margin:0;
+      /* Subtle light gradient for a soft feel */
+      background: radial-gradient(at top left, rgba(12, 228, 247, 0.05), transparent 100%), 
+                  radial-gradient(at bottom right, rgba(249, 247, 248, 0.05), transparent 70%),
+                  var(--bg);
+      /*background-image: url('https://img.freepik.com/free-photo/journal-student-female-writer-letter_1150-1672.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 1485px;
+      background-attachment: fixed;*/
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container{
+      width:100%;max-width:var(--maxw);
+      padding: 0 20px;
+    }
+
+    /* HEADER */
+    header{
+      background: radial-gradient(at top left, rgba(12, 247, 122, 0.05), transparent 70%), 
+                  radial-gradient(at bottom right, rgba(12, 247, 122, 0.05), transparent 70%),
+                  radial-gradient(at bottom left, rgba(12, 247, 122, 0.05), transparent 70%),
+                  radial-gradient(at top right, rgba(12, 247, 122, 0.05), transparent 70%),
+                  var(--bg);
+      display:flex;align-items:center;justify-content:space-between;
+      padding: 20px 0;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+      
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand{display:flex;align-items:center;gap:10px; cursor: pointer; color: var(--text);}
+    .logo{
+      /* Bright logo with strong color contrast */
+      width:32px;height:32px;border-radius:var(--radius);
+      background: linear-gradient(135deg, #007bff, #ff477d); 
+      display:grid;place-items:center;font-weight:800;font-size:16px;font-family:'Playfair Display',serif;color:var(--card-bg); /* White text on colorful background */
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+    .site-title h1{margin:0;font-size:22px;line-height:1; font-weight: 700;}
+    .site-title p{display:none;} 
+
+    .nav-actions{display:flex;gap:10px;align-items:center;}
+    .btn{background:var(--vibrant-card);border:1px solid var(--border);padding:8px 16px;border-radius:var(--radius);color:var(--text);cursor:pointer;font-weight:600;transition: background-color 0.2s, border-color 0.2s;}
+    .btn:hover{background-color: #e2e6ea; border-color: var(--accent-primary); color: var(--accent-primary);}
+    .btn.primary{background-color:var(--accent-primary);color:var(--card-bg);border-color:var(--accent-primary);font-weight:700;}
+    .btn.primary:hover{background-color: #0056b3; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);}
+    .search{display:flex;align-items:center;gap:8px;background:var(--card-bg);padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border);max-width:300px;}
+    .search input{background:transparent;border:0;outline:none;color:inherit;width:100%;}
+    .search:focus-within { border-color: var(--accent-primary); box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);} 
+
+    /* GENERAL CARD / INPUT STYLES */
+    .card{
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08); /* Light shadow for depth */
+    }
+    .input,textarea{
+      background: var(--vibrant-card);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: var(--radius);
+      color: var(--text);
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .input:focus, textarea:focus { border-color: var(--accent-primary); outline: none; box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); background-color: var(--card-bg); }
+    textarea{min-height:200px;resize:vertical;}
+    .small{font-size:14px;color:var(--muted);}
+    .muted{color:var(--muted);}
+    .ghost{background:transparent;border:0;color:var(--accent-secondary);cursor:pointer; font-weight: 600; transition: color 0.2s;}
+    .ghost:hover{color: var(--accent-primary);}
+
+    /* PAGE STYLES */
+    .page { display: none; padding: 20px 0; }
+    .page.active { display: block; }
+    
+    /* POST FEED / POST CARD */
+    .feed-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; padding: 0 10px;}
+    .posts-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:25px;}
+    .post-card{
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .post-card:hover{
+        border-color:var(--accent-secondary);
+        transform: translateY(-3px); /* Subtle lift on hover */
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .post-card .thumbnail{
+      width:100%;height:180px;border-radius:var(--radius);background-size:cover;background-position:center;
+      background-color: var(--vibrant-card);
+    }
+    .post-card h3{margin:0;font-size:1.2rem;color:var(--text); font-weight: 700;}
+    .post-meta{font-size:13px;color:var(--muted);display:flex;justify-content:space-between; border-top: 1px solid var(--border); padding-top: 10px;}
+
+    /* VIBRANT TAGS */
+    .post-card .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;}
+    .tag{
+      display:inline-block;
+      background: rgba(0, 123, 255, 0.1); 
+      padding:4px 10px;border-radius:20px; /* Pill shape */
+      font-size:12px;
+      color:var(--accent-primary); 
+      border: 1px solid var(--accent-primary);
+      cursor: pointer;
+    }
+
+    /* AUTH CARD */
+    .auth-page { max-width: 450px; margin: 60px auto; }
+    .auth-page .actions { justify-content: space-between; }
+
+
+    /* FOOTER - Updated to be sticky/fixed */
+    footer{
+      border-top:1px solid var(--border);
+      padding:20px 0;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      width: 100%;
+      /* Use STICKY for footer: it stays at the bottom of the content, but sticks to viewport bottom when content is short */
+      position: static; 
+      bottom: 0;      
+      left: 0;        
+      background-color: var(--card-bg); /* Use solid background to hide content underneath */
+      z-index: 999;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.05); /* Subtle shadow above footer */
+    }
+    footer a{color:var(--muted);text-decoration:none;transition: color 0.2s;}
+    footer a:hover{color:var(--accent-primary);} /* Social links pop on hover */
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .new-post-page .compose > .input,
+    .new-post-page .compose > textarea {
+        margin-bottom: 15px;
+    }
+    .new-post-page .compose > .input:last-child {
+        margin-bottom: 0; 
+    }
+
+    /* UTILITIES/RESPONSIVE */
+    .text-center{text-align:center;}
+    @media (max-width: 600px){
+      .nav-actions{gap:5px;}
+      .search{display:none;}
+      .btn{padding:6px 10px;}
+      .posts-grid{grid-template-columns:1fr;}
+      /* Remove margin-bottom from main as we are using sticky footer now */
+      main { margin-bottom: 0; padding-bottom: 70px; } 
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header style="width: 100%;top: 0px;">
+      <div class="brand" onclick="navigate('feedPage')">
+        <div class="logo">B</div>
+        <div class="site-title">
+          <h1>BloomBlog</h1>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="search" id="headerSearch">
+          <i class="fa fa-magnifying-glass"></i>
+          <input id="searchInput" placeholder="Search posts..." />
+        </div>
+        <button class="btn secondary" id="navLogin">Login</button>
+        <button class="btn primary" id="navSignup">Sign up</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page active" id="feedPage">
+        <div class="feed-header">
+          <h2 style="margin:0;">Latest Articles</h2>
+          <div class="small muted">Found <span id="postCount">0</span> posts</div>
+        </div>
+        <div class="posts-grid" id="postsList">
+          </div>
+      </section>
+
+      <section class="page auth-page" id="loginPage">
+        <div class="card">
+          <h2>Sign In to BloomBlog</h2>
+          <div class="small muted text-center" style="margin-bottom: 20px;">
+            Enter your details below to access your posts.
+          </div>
+
+          <div class="input-group">
+            <input id="li_email" class="input" placeholder="Email address" />
+          </div>
+          <div class="input-group">
+            <input id="li_pass" type="password" class="input" placeholder="Password" />
+          </div>
+
+          <div class="actions">
+            <button class="btn secondary" onclick="navigate('feedPage')">Cancel</button>
+            <button class="btn primary" id="li_submit">Login</button>
+          </div>
+
+          <div class="link-switch">
+            Don't have an account? <button class="ghost" onclick="navigate('signupPage')">Sign Up</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page auth-page" id="signupPage">
+        <div class="card">
+          <h2>Create Your Account</h2>
+          <div class="small muted text-center" style="margin-bottom: 20px;">
+            Join BloomBlog in seconds.
+          </div>
+
+          <div class="input-group">
+            <input id="su_name" class="input" placeholder="Full name (Username)" />
+          </div>
+          <div class="input-group">
+            <input id="su_email" class="input" placeholder="Email address" />
+          </div>
+          <div class="input-group">
+            <input id="su_pass" type="password" class="input" placeholder="Password" />
+          </div>
+
+          <div class="actions">
+            <button class="btn secondary" onclick="navigate('feedPage')">Cancel</button>
+            <button class="btn primary" id="su_submit">Create Account</button>
+          </div>
+
+          <div class="link-switch">
+            Already have an account? <button class="ghost" onclick="navigate('loginPage')">Login</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page new-post-page" id="newPostPage">
+        <div class="card">
+          <h2 style="margin-top:0;">Write a New Article</h2>
+          <div class="compose">
+            <input id="titleInput" class="input" placeholder="A captivating post title..." />
+            <textarea id="bodyInput" placeholder="Start writing your thoughts here... (Markdown supported)"></textarea>
+            <input id="tagsInput" class="input" placeholder="Tags (e.g., tech, travel, coding — comma separated)" />
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+              <button class="btn secondary" id="clearCompose">Clear</button>
+              <button class="btn primary" id="publishBtn">Publish Article</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="page new-post-page" id="postDetailPage">
+        <div id="postDetailContent">
+           </div>
+        <button class="btn secondary" style="margin-top: 20px;" onclick="navigate('feedPage')">← Back to Feed</button>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© 2025 <strong>BloomBlog</strong>. All rights reserved.</div>
+      <div style="margin-top:8px;display:flex;justify-content:center;gap:18px;font-size:16px">
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // ------------------------------------
+    // GLOBAL/UTILITY FUNCTIONS (Consolidated Declarations)
+    // ------------------------------------
+    let allPosts = [];
+    const qs = s => document.querySelector(s);
+    const TOKEN_KEY = 'bloom_jwt_token'; // Fixed JS redeclaration issues by consolidating
+
+    function setToken(token){ 
+      if(token) localStorage.setItem(TOKEN_KEY, token); 
+      else localStorage.removeItem(TOKEN_KEY); 
+    }
+    function getToken(){ return localStorage.getItem(TOKEN_KEY); }
+    
+    // Decodes the token payload for UI display (simplified client-side decode)
+    function getSessionUser() {
+        const token = getToken();
+        if (!token) return null;
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return {
+                id: payload.id,
+                email: payload.email,       
+                name: payload.username || 'User' 
+            };
+        } catch (e) {
+            setToken(null); 
+            return null;
+        }
+    }
+
+    function truncate(s,n){ return s.length>n? s.slice(0,n-1)+'…':s }
+    function placeholderThumb(){ return 'https://images.sampletemplates.com/wp-content/uploads/2018/03/10-Informative-Writing-Samples-and-Templates-PDF.jpg' }
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;" }[c])) }
+
+    // ------------------------------------
+    // ROUTING
+    // ------------------------------------
+
+    const pages = ['feedPage', 'loginPage', 'signupPage', 'newPostPage', 'postDetailPage'];
+
+    function navigate(pageId, postId = null) {
+      if (pageId === 'newPostPage' && !getSessionUser()) {
+          alert('Please login to write a new post.');
+          return navigate('loginPage'); 
+      }
+      
+      pages.forEach(id => {
+        const page = qs(`#${id}`);
+        if (page) {
+          page.classList.remove('active');
+        }
+      });
+      
+      const targetPage = qs(`#${pageId}`);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        // Specific logic for page loads
+        if (pageId === 'feedPage') loadAndRenderPosts();
+        if (pageId === 'postDetailPage' && postId) renderPostDetail(postId);
+      }
+      // Update browser history (optional, for back/forward)
+      history.pushState({ page: pageId, postId: postId }, '', `#${pageId}${postId ? '?id='+postId : ''}`);
+      // Scroll to top when changing pages
+      window.scrollTo(0, 0);
+    }
+
+    // Handle initial load and browser back/forward
+    window.addEventListener('popstate', (event) => {
+        const hash = window.location.hash.substring(1) || 'feedPage';
+        const pageId = hash.split('?')[0];
+        const params = new URLSearchParams(hash.split('?')[1]);
+        const postId = params.get('id');
+        navigate(pageId, postId);
+    });
+
+    // ------------------------------------
+    // POST LOGIC
+    // ------------------------------------
+    
+    async function loadAndRenderPosts() {
+      try {
+        const response = await fetch('/posts');
+        if (!response.ok) throw new Error('Failed to fetch posts');
+        const posts = await response.json();
+    
+        const formattedPosts = posts.map(p => ({
+            id: p._id,
+            title: p.title,
+            body: p.content,
+            author: p.author ? p.author.username : 'Unknown', 
+            email: p.author ? p.author.email : '',
+            tags: p.tags || [], 
+            thumb: placeholderThumb(), 
+            created: new Date(p.createdAt).toLocaleString(),
+        }));
+        allPosts = formattedPosts;
+        renderPosts(formattedPosts);
+      } catch(e) {
+        console.error('Error fetching posts:', e);
+        qs('#postCount').textContent = 'Error';
+        qs('#postsList').innerHTML = '<div style="color:var(--accent-primary); text-align:center; padding: 20px;">Could not load posts from server.</div>';
+      }
+    }
+
+    (function init(){
+      loadAndRenderPosts();
+      refreshUI(); 
+    })();
+
+    // utilities
+    function uid(prefix='id'){return prefix+Math.random().toString(36).slice(2,9)}
+
+    function renderPosts(posts){
+      const container = qs('#postsList'); container.innerHTML='';
+      posts.forEach(p=>{
+        const el = document.createElement('div'); el.className='post-card';
+        el.onclick = () => navigate('postDetailPage', p.id); 
+        el.innerHTML = `
+          <div class="thumbnail" style="background-image:url(${p.thumb})"></div>
+          <div class="meta">
+            <h3>${escapeHtml(p.title)}</h3>
+            <div class="post-meta">
+              <span>by ${escapeHtml(p.author)}</span>
+              <span>${p.created}</span>
+            </div>
+            <p>${escapeHtml(truncate(p.body,120))}</p>
+            <div class="tags">${(p.tags||[]).map(t=>`<span class="tag" onclick="event.stopPropagation(); alert('Tag filtering is a demo feature. Need backend support for full functionality.');">${escapeHtml(t)}</span>`).join('')}</div>
+          </div>
+        `;
+        container.appendChild(el);
+      })
+      qs('#postCount').textContent = posts.length;
+    }
+    
+    // Search Functionality
+    qs('#searchInput').addEventListener('input', e => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) return renderPosts(allPosts);
+      const filtered = allPosts.filter(p => (p.title + p.body + (p.tags || []).join(' ') + p.author).toLowerCase().includes(q));
+      renderPosts(filtered);
+    });
+
+    // Post Detail Rendering (Simplistic HTML for a dynamic page)
+    function renderPostDetail(postId) {
+        const post = allPosts.find(p => p.id === postId);
+        const container = qs('#postDetailContent');
+
+        if (!post) {
+            container.innerHTML = '<div class="card"><h3>Post Not Found</h3><p>The requested post could not be loaded.</p></div>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="card">
+                <h1>${escapeHtml(post.title)}</h1>
+                <div class="small muted" style="margin-bottom: 20px;">
+                    By <strong>${escapeHtml(post.author)}</strong> on ${post.created}
+                </div>
+                <div class="tags" style="margin-bottom: 30px;">
+                    ${(post.tags||[]).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}
+                </div>
+                <div style="white-space: pre-wrap; line-height: 1.6; font-size: 16px;">
+                    ${escapeHtml(post.body)}
+                </div>
+            </div>
+        `;
+    }
+
+    // Publish function
+    async function publish(){
+      const title = qs('#titleInput').value.trim();
+      const content = qs('#bodyInput').value.trim(); 
+      const tags = qs('#tagsInput').value.split(',').map(t=>t.trim()).filter(Boolean);
+      if(!title||!content){ alert('Please add a title and body'); return }
+      const token = getToken();
+
+      try {
+        const response = await fetch('/posts', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+          },
+          body: JSON.stringify({ title, content, tags}) 
+        });
+
+        const data = await response.json();
+
+        if(response.ok) {
+          qs('#titleInput').value=''; qs('#bodyInput').value=''; qs('#tagsInput').value='';
+          alert('Post published! Redirecting to feed...');
+          navigate('feedPage'); 
+        } else {
+          alert('Publish failed: ' + (data.error || 'Check if you are logged in.'));
+        }
+      } catch(e) {
+        alert('Network error during publish.');
+      }
+    }
+
+
+    // ------------------------------------
+    // AUTH LOGIC
+    // ------------------------------------
+
+    // Signup submission logic
+    qs('#su_submit').onclick = async ()=>{
+        const username = qs('#su_name').value.trim(); 
+        const email = qs('#su_email').value.trim().toLowerCase();
+        const password = qs('#su_pass').value;
+        if(!username||!email||!password){ alert('Please fill all fields'); return }
+  
+        try {
+          const response = await fetch('/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+          });
+
+          const data = await response.json();
+
+          if(response.ok) {
+            alert('Account created! Please log in.');
+            navigate('loginPage'); 
+          } else {
+            alert('Signup failed: ' + (data.message || data.error || 'Server error'));
+          }
+        } catch(e) {
+          alert('Network error during signup. Check your console for details.');
+        }
+    } 
+
+    // Login submission logic
+    qs('#li_submit').onclick = async ()=>{
+        const email = qs('#li_email').value.trim().toLowerCase();
+        const password = qs('#li_pass').value;
+
+        try {
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+
+          const data = await response.json();
+
+          if(response.ok) {
+            setToken(data.token); 
+            refreshUI();
+            alert('Logged in successfully!');
+            navigate('feedPage'); 
+          } else {
+            alert('Login failed: ' + (data.error || 'Invalid credentials'));
+          }
+        } catch(e) {
+          alert('Network error during login.');
+        }
+    }
+    
+    // Logout function
+    function logout(){ 
+        if(confirm('Sign out?')){ 
+            setToken(null); 
+            refreshUI(); 
+            navigate('feedPage');
+        } 
+    }
+
+    // UI based on session
+    function refreshUI(){
+      const me = getSessionUser(); 
+      
+      const loginBtn = qs('#navLogin');
+      const signupBtn = qs('#navSignup');
+
+      if(me){
+          // Logged In State
+          loginBtn.textContent = 'Logout'; 
+          loginBtn.classList.remove('primary');
+          loginBtn.classList.add('secondary');
+          loginBtn.onclick = logout; 
+          
+          signupBtn.textContent = 'New Post'; 
+          signupBtn.classList.add('primary');
+          signupBtn.classList.remove('secondary');
+          signupBtn.onclick = ()=>navigate('newPostPage');
+      } else {
+          // Logged Out State
+          loginBtn.textContent = 'Login'; 
+          loginBtn.classList.remove('primary');
+          loginBtn.classList.add('secondary');
+          loginBtn.onclick = ()=>navigate('loginPage');
+          
+          signupBtn.textContent = 'Sign up'; 
+          signupBtn.classList.add('primary');
+          signupBtn.classList.remove('secondary');
+          signupBtn.onclick = ()=>navigate('signupPage');
+      }
+    }
+    
+    // ------------------------------------
+    // EVENT LISTENERS & INITIALIZATION
+    // ------------------------------------
+
+    // Publish button
+    qs('#publishBtn').addEventListener('click', publish);
+    // Clear compose
+    qs('#clearCompose').addEventListener('click', ()=>{ 
+        qs('#titleInput').value=''; 
+        qs('#bodyInput').value=''; 
+        qs('#tagsInput').value=''; 
+    });
+
+    // Initial load function
+    (function init(){
+      const hash = window.location.hash.substring(1).split('?')[0] || 'feedPage';
+      const params = new URLSearchParams(window.location.hash.substring(1).split('?')[1]);
+      const postId = params.get('id');
+      
+      // Load all posts and update UI first
+      loadAndRenderPosts(); 
+      refreshUI();
+      
+      // Navigate to the correct page based on hash or default to feed
+      navigate(hash, postId);
+    })();
+  </script>
+</body>
+</html>
